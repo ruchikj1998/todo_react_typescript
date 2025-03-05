@@ -1,3 +1,4 @@
-# React + TypeScript + Vite
+# Todo lists app
 
-## Todo lists app
+## React + TypeScript + Vite
+
