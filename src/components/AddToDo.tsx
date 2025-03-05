@@ -5,10 +5,13 @@ export default function AddToDo() {
     const [todo, setTodo] = useState("");
     const {handleAddToDo} = useTodos();
 
+    // Form submit to add new task
     const handleFormSubmit = (e:FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
         handleAddToDo(todo)
         setTodo("");
+
     }
 
   return (

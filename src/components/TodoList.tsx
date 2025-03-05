@@ -1,40 +1,40 @@
+import { useNavFilter } from '../hooks/useNavFilter';
 import { MyTodoType, useTodos } from '../store/todos'
-import { useSearchParams } from 'react-router-dom';
+import { NAV_FILTER_ACTIVE, NAV_FILTER_COMPLETED } from '../utils/constants';
+import ToDoItem from './ToDoItem';
 
-export default function TodoList() {
+export default function ToDoList() {
 
-    const {todos, toggleTodoAsCompleted, handleDelete} = useTodos();
-    const [searchParam] = useSearchParams();
+    const { todos } = useTodos();
+    const navFilter = useNavFilter();
 
-    let filterData = todos;
-    let navFilter = searchParam.get("todos");
-    
-    if(navFilter === "active"){
-        filterData = filterData.filter((task)=> task.completed == false)
-    }
+    // Extracted filtering logic
+    const getFilteredTodos = () => {
 
-    if(navFilter === "completed"){
-        filterData = filterData.filter((task)=> task.completed == true)
-    }
+        switch (navFilter) {
 
-  return (
-    <ul className='main-task'>
-        {
-            filterData.map((todo:MyTodoType) => {
-                return <li key={todo.id}>
-                    <input type="checkbox"  id={`todo-${todo.id}`} 
-                    checked={todo.completed} 
-                    onChange={() => toggleTodoAsCompleted(todo.id)}/>
-                    <label htmlFor={`todo-${todo.id}`} >{todo.task}</label>
+            case NAV_FILTER_ACTIVE:
+                return todos.filter((task) => !task.completed);
+            case NAV_FILTER_COMPLETED:
+                return todos.filter((task) => task.completed);
+            default:
+                return todos;
 
-                    {
-                        todo.completed && (
-                            <button onClick={() => handleDelete(todo.id)}>Delete</button>
-                        )
-                    }
-                </li>
-            }) 
         }
-    </ul>
-  )
+
+    };
+
+    const filteredTodos = getFilteredTodos();
+
+    return (
+        <ul className='main-task'>
+            {
+
+                filteredTodos.map((todo: MyTodoType) => {
+                    return <ToDoItem key={todo.id} todoItem={todo} />
+                })
+                
+            }
+        </ul>
+    )
 }

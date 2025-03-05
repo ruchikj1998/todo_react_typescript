@@ -1,6 +1,6 @@
 import AddToDo from "./components/AddToDo"
 import NavBar from "./components/NavBar"
-import TodoList from "./components/TodoList"
+import ToDoList from "./components/TodoList"
 import "./App.css"
 
 const App = () => {
@@ -8,9 +8,11 @@ const App = () => {
     <main>
       <h2>TODO React + TypeScript</h2>
 
+      {/* components */}
       <NavBar />
       <AddToDo />
-      <TodoList />
+      <ToDoList />
+      
     </main>
   )
 }
